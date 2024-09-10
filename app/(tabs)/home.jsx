@@ -9,6 +9,8 @@ import {
   Pressable,
   Dimensions,
   ScrollView,
+  FlatList,
+  TouchableOpacity,
 } from "react-native";
 import { Colors } from "../../styles/index.js";
 import { icons, images } from "../../constants/index.js";
@@ -17,6 +19,7 @@ import useStore from "../../store/index.js";
 import EmptyHomeState from "../../components/common/EmptyHomeState.jsx";
 import MtDropdown from "../../components/common/MtDropdown.jsx";
 import RefuelingPriceBarChart from "../../components/common/RefuelingPriceBarChart.jsx";
+import FuelCard from "../../components/common/FuelCard.jsx";
 
 const Home = () => {
   const { user, vehicle, setVehicle, refuellings, setRefuellings } = useStore();
@@ -139,7 +142,14 @@ const Home = () => {
               contentContainerStyle={styles.scrollContentContainer}
             >
               <View>
-                <Text style={[styles.label, {paddingHorizontal: 20, marginBottom: 12}]}>Fuel Insights</Text>
+                <Text
+                  style={[
+                    styles.label,
+                    { paddingHorizontal: 20, marginBottom: 12 },
+                  ]}
+                >
+                  Fuel Insights
+                </Text>
                 <View style={styles.insightContainer}>
                   <View style={styles.insightWrapper}>
                     <View style={styles.insightInfo}></View>
@@ -155,7 +165,37 @@ const Home = () => {
                 <RefuelingPriceBarChart />
               </View>
 
-              <View></View>
+              <View style={{ marginTop: 36 }}>
+                <View
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    paddingHorizontal: 20,
+                    marginBottom: 12,
+                  }}
+                >
+                  <Text style={[styles.label]}>Fuel Insights</Text>
+                  <TouchableOpacity>
+                    <Image
+                      source={icons.seeAll}
+                      style={{ width: 64, height: 18 }}
+                    />
+                  </TouchableOpacity>
+                </View>
+
+                <View style={styles.insightContainer}>
+                  <FlatList
+                    data={refuellings}
+                    keyExtractor={(item) => item.id}
+                    renderItem={({ item }) => <FuelCard item={item} />}
+                    style={{ flex: 1 }}
+                    scrollEnabled={true}
+                    contentContainerStyle={{ paddingBottom: 10 }}
+                  />
+                </View>
+              </View>
             </ScrollView>
           )}
         </>
@@ -302,6 +342,14 @@ const styles = StyleSheet.create({
     height: 217,
     marginTop: 36,
     paddingHorizontal: 20,
+  },
+
+  listContainer: {
+    width: "100%",
+    height: 364,
+    marginTop: 20,
+    paddingHorizontal: 18,
+    // zIndex: -1000,
   },
 });
 

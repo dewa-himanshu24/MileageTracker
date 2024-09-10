@@ -17,4 +17,5 @@ export default {
   rightSmallArrow: require("../assets/icons/rightSmallArrow.png"),
   calender: require("../assets/icons/calender.png"),
   delete2: require("../assets/icons/delete2.png"),
+  seeAll: require("../assets/icons/seeAll.png"),
 };

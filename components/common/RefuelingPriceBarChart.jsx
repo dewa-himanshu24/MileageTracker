@@ -5,7 +5,7 @@ import useStore from "../../store";
 import { Colors } from "../../styles";
 
 const processRefuellingsData = (refuellings) => {
-  const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   const currentDate = new Date();
   const lastFiveMonths = [];
 
