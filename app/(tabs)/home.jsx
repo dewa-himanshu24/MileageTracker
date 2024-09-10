@@ -36,9 +36,6 @@ const Home = () => {
   // Check if user or vehicles exist to avoid null reference issues
   const vehicles = user?.vehicles ? Object.values(user?.vehicles) : [];
 
-  // // Extracting refuellings from all vehicles
-  // const refuellings = vehicles?.map((vehicle) => vehicle?.refuellings).flat();
-
   // Preparing the data for MtDropdown
   const dataList = vehicles?.map((vehicle) => ({
     ...vehicle,
@@ -152,10 +149,16 @@ const Home = () => {
                 </Text>
                 <View style={styles.insightContainer}>
                   <View style={styles.insightWrapper}>
-                    <View style={styles.insightInfo}></View>
+                    <View style={styles.insightInfo}>
+                      <Text style={styles.label}>Avg Fuel Consumption</Text>
+                      <Text style={styles.label}>20 km/l</Text>
+                    </View>
                   </View>
                   <View style={styles.insightWrapper}>
-                    <View style={styles.insightInfo}></View>
+                    <View style={styles.insightInfo}>
+                      <Text style={styles.label}>Last Fuel Consumption</Text>
+                      <Text style={styles.label}>20 km/l</Text>
+                    </View>
                   </View>
                 </View>
               </View>
@@ -319,7 +322,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     alignItems: "center",
     backgroundColor: "rgba(240, 242, 242, 1)",
-    // width: "100%",
     paddingHorizontal: 16,
     paddingVertical: 20,
   },
@@ -329,6 +331,12 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
     borderRadius: 8,
     padding: 16,
+  },
+  insightInfo: {
+    display: "flex",
+
+    justifyContent: "space-between",
+    height: "100%",
   },
   label: {
     fontFamily: "Rubrik-Medium",
