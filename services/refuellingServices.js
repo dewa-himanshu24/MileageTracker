@@ -46,6 +46,19 @@ class RefuellingServices {
     return { user: user, vehicle: user.vehicles[vehicle_id], refuelling: newRefuelling };
   }
 
+  deleteRefuelling = (paylaod) => {
+    const {user , vehicle, refuelling_id} = paylaod;
+    console.log("deleteRefuelling", user);
+    console.log("deleteRefuelling", vehicle);
+    console.log("deleteRefuelling", refuelling_id);
+    const updatedRefuellings = vehicle?.refuellings?.filter((refuelling,) => (refuelling?.refuelling_id !== refuelling_id));
+
+
+    user.vehicles[vehicle?.vehicle_id].refuellings = updatedRefuellings;
+    console.log("Refuelling added successfully!");
+    return { user: user, vehicle: user.vehicles[vehicle?.vehicle_id] };
+  }
+
 }
 
 export default new RefuellingServices();

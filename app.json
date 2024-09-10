@@ -13,13 +13,15 @@
       "backgroundColor": "rgba(245, 88, 88, 1)"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.himanshudewangan.mileageTracker"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "rgba(245, 88, 88, 1)"
-      }
+      },
+      "package": "com.himanshudewangan.mileageTracker"
     },
     "web": {
       "favicon": "./assets/favicon.png",
@@ -28,6 +30,14 @@
     "plugins": [
       "expo-router",
       "expo-font"
-    ]
+    ],
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "bba22bf5-0103-4d38-ac58-a307a7d09322"
+      }
+    }
   }
 }

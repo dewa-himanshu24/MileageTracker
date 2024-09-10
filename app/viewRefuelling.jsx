@@ -7,9 +7,10 @@ import Helpers from "../utils/helpers.js";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { images, icons } from "../constants/index.js";
 import MtButton from "../components/common/MtButton.jsx";
+import refuellingServices from "../services/refuellingServices.js";
 
 const ViewRefueling = () => {
-  const { refuelling, vehicle } = useStore();
+  const { setUser, user, refuelling, vehicle, setVehicle, setRefuellings } = useStore();
 
   const handleCancel = () => {
     router.back();
@@ -20,7 +21,17 @@ const ViewRefueling = () => {
   }
 
   const handleDeleteRefuelling = () => {
+    const paylaod = {
+      user,
+      vehicle,
+      refuelling_id: refuelling?.refuelling_id,
+    }
+    const updatedRefuellings = refuellingServices.deleteRefuelling(paylaod);
+    setUser(updatedRefuellings.user);
+    setVehicle(updatedRefuellings.vehicle);
+    setRefuellings(updatedRefuellings.vehicle.refuellings);
     console.log("Delete refuelling");
+    router.push("/refuelling");
   };
 
   return (

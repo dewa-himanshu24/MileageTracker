@@ -52,6 +52,9 @@ class Helpers {
       return false;
     }
 
+    console.log("New newStartReading reading", newStartReading);
+    console.log("New lastEndReading reading", lastEndReading);
+
     if (newStartReading >= lastEndReading) {
       console.log(
         "New start reading is greater than the last end reading",

@@ -146,7 +146,7 @@ const Home = () => {
               </View>
             </View>
           )}
-          {!!refuellings.length && (
+          {!!refuellings?.length && (
             <ScrollView
               style={styles.scrollContainer}
               contentContainerStyle={styles.scrollContentContainer}
