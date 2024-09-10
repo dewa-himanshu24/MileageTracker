@@ -22,9 +22,9 @@ class Helpers {
   }
 
   validateOdometerReading = (selectedVehicle, newStartReading, newEndReading) => {
-    const refuellings = selectedVehicle.refuellings;
+    const refuellings = selectedVehicle?.refuellings || [];
   
-    if (refuellings.length === 0) {
+    if (refuellings?.length === 0) {
       return true;
     }
   

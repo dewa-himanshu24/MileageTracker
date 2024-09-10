@@ -8,6 +8,7 @@ import {
   StyleSheet,
   Pressable,
   Dimensions,
+  ScrollView,
 } from "react-native";
 import { Colors } from "../../styles/index.js";
 import { icons, images } from "../../constants/index.js";
@@ -15,20 +16,25 @@ import MtButton from "../../components/common/MtButton.jsx";
 import useStore from "../../store/index.js";
 import EmptyHomeState from "../../components/common/EmptyHomeState.jsx";
 import MtDropdown from "../../components/common/MtDropdown.jsx";
+import RefuelingPriceBarChart from "../../components/common/RefuelingPriceBarChart.jsx";
 
 const Home = () => {
-  const { user, vehicle, setVehicle } = useStore();
-  const [selectedVehicle, setSelectedVehicle] = useState(vehicle ? { ...vehicle, name: vehicle?.vehicleName } : null);
+  const { user, vehicle, setVehicle, refuellings, setRefuellings } = useStore();
+  const [selectedVehicle, setSelectedVehicle] = useState(
+    vehicle ? { ...vehicle, name: vehicle?.vehicleName } : null
+  );
 
   useEffect(() => {
-    setSelectedVehicle(vehicle ? { ...vehicle, name: vehicle?.vehicleName } : null);
+    setSelectedVehicle(
+      vehicle ? { ...vehicle, name: vehicle?.vehicleName } : null
+    );
   }, [vehicle]);
 
   // Check if user or vehicles exist to avoid null reference issues
   const vehicles = user?.vehicles ? Object.values(user?.vehicles) : [];
 
-  // Extracting refuellings from all vehicles
-  const refuellings = vehicles?.map((vehicle) => vehicle?.refuellings).flat();
+  // // Extracting refuellings from all vehicles
+  // const refuellings = vehicles?.map((vehicle) => vehicle?.refuellings).flat();
 
   // Preparing the data for MtDropdown
   const dataList = vehicles?.map((vehicle) => ({
@@ -39,6 +45,12 @@ const Home = () => {
 
   const handleOnPressUser = () => {
     router.push("/profile");
+  };
+
+  const handleSelectVehicle = (value) => {
+    setVehicle(value);
+    setSelectedVehicle(value);
+    setRefuellings(value.refuellings);
   };
 
   return (
@@ -71,17 +83,14 @@ const Home = () => {
             </Text>
             <View style={styles.fullScreenOverlay}>
               <MtDropdown
+                value={selectedVehicle}
+                onChange={handleSelectVehicle}
                 width={156}
                 dropdownHeight={34}
                 dropdownBackgroundColor={Colors.inputBackground}
                 dataList={dataList}
                 dropdownTextSize={14}
                 menuHeight={120}
-                onChange={(value) => {
-                  setVehicle(value);
-                  setSelectedVehicle(value);
-                }}
-                value={selectedVehicle}
               />
             </View>
             <Image
@@ -125,10 +134,12 @@ const Home = () => {
             </View>
           )}
           {!!refuellings.length && (
-            <View>
-
+            <ScrollView
+              style={styles.scrollContainer}
+              contentContainerStyle={styles.scrollContentContainer}
+            >
               <View>
-                <Text style={styles.label}>Fuel Insights</Text>
+                <Text style={[styles.label, {paddingHorizontal: 20, marginBottom: 12}]}>Fuel Insights</Text>
                 <View style={styles.insightContainer}>
                   <View style={styles.insightWrapper}>
                     <View style={styles.insightInfo}></View>
@@ -139,11 +150,13 @@ const Home = () => {
                 </View>
               </View>
 
-              <View>
-                
+              <View style={[styles.analyticContainer, { marginBottom: 36 }]}>
+                <Text style={styles.label}>Money spent on fuel</Text>
+                <RefuelingPriceBarChart />
               </View>
+
               <View></View>
-            </View>
+            </ScrollView>
           )}
         </>
       )}
@@ -263,10 +276,10 @@ const styles = StyleSheet.create({
   insightContainer: {
     display: "flex",
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "space-around",
     alignItems: "center",
     backgroundColor: "rgba(240, 242, 242, 1)",
-    width: "100%",
+    // width: "100%",
     paddingHorizontal: 16,
     paddingVertical: 20,
   },
@@ -283,7 +296,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 20,
     color: Colors.textPrimary,
-    marginBottom: 12,
+  },
+
+  analyticContainer: {
+    height: 217,
+    marginTop: 36,
     paddingHorizontal: 20,
   },
 });
