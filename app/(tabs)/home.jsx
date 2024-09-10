@@ -7,6 +7,7 @@ import {
   Image,
   StyleSheet,
   Pressable,
+  Dimensions,
 } from "react-native";
 import { Colors } from "../../styles/index.js";
 import { icons, images } from "../../constants/index.js";
@@ -138,7 +139,9 @@ const Home = () => {
                 </View>
               </View>
 
-              <View></View>
+              <View>
+                
+              </View>
               <View></View>
             </View>
           )}
@@ -147,6 +150,8 @@ const Home = () => {
     </SafeAreaView>
   );
 };
+
+const screenWidth = Dimensions.get("window").width;
 
 const styles = StyleSheet.create({
   container: {
@@ -219,7 +224,7 @@ const styles = StyleSheet.create({
   },
   vehicleImage: {
     marginTop: 58,
-    width: 318,
+    width: 320,
     height: 178,
     backgroundColor: Colors.lightGrey,
     borderRadius: 12,

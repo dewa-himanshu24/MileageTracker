@@ -246,11 +246,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     width: 324,
-    height: 96,
     alignSelf: "center",
-    marginTop: 225,
-    paddingTop: 20,
     paddingBottom: 28,
+    position: "absolute",
+    bottom: 0,
   },
   errorText: {
     color: "red",

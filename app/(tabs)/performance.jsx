@@ -99,20 +99,16 @@ const Performance = () => {
                 // resizeMode="contain"
               />
 
-              <View style={styles.analyticContainer}>
+              <View style={[styles.analyticContainer, { marginBottom: 36 }]}>
                 <Text style={styles.selectText}>Money spent on fuel</Text>
-                {/* <View style={styles.analytic}> */}
                 <RefuelingPriceBarChart />
-                {/* </View> */}
               </View>
 
               <View style={[styles.analyticContainer, { marginBottom: 36 }]}>
                 <Text style={styles.selectText}>
                   Vehicle mileage performance
                 </Text>
-                {/* <View style={styles.analytic}> */}
                 <MileageLineChart />
-                {/* </View> */}
               </View>
             </View>
           </ScrollView>
@@ -191,14 +187,6 @@ const styles = StyleSheet.create({
     height: 217,
     marginTop: 36,
     paddingHorizontal: 20,
-  },
-
-  analytic: {
-    width: "100%",
-    height: 185,
-    backgroundColor: Colors.white,
-    marginTop: 12,
-    borderRadius: 8,
   },
 
   selectText: {
