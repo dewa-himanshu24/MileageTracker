@@ -15,10 +15,11 @@ import { UserServices, clearAsyncStorage } from "../services/index.js";
 import useStore from "../store/index.js";
 
 const Profile = ({}) => {
-  const { user } = useStore();
+  const { user, setRefuellings } = useStore();
 
   const handleLogout = async () => {
     await UserServices.logout();
+    setRefuellings([]);
     router.push("/");
   }
 

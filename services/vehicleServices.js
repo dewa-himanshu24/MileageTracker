@@ -21,9 +21,6 @@ class VehicleServices {
 
     // Add the new vehicle to the user's vehicles
     user.vehicles[nextVehicleId] = newVehicle;
-    console.log("Dewa1 addVehicle user", JSON.stringify(user));
-    console.log("Dewa2 addVehicle user", JSON.stringify(newVehicle));
-    console.log("Vehicle added successfully!");
     return { user, vehicle: newVehicle };
   }
 

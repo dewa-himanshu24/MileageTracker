@@ -14,9 +14,9 @@ const ViewRefueling = () => {
   const handleCancel = () => {
     router.back();
   };
-
+  console.log("Dewa ViewRefueling refuelling", refuelling);
   const handleEdit = () => {
-    router.push(`/formRefuelling/${refuelling.refuelling_id}`);
+    router.push(`/formRefuelling/${refuelling?.refuelling_id}`);
   }
 
   return (
@@ -36,7 +36,7 @@ const ViewRefueling = () => {
               />
             </TouchableOpacity>
             <Text style={styles.refuellingDate}>
-              {Helpers.formatDateType2(refuelling.refuellingDate)}
+              {Helpers.formatDateType2(refuelling?.refuellingDate)}
             </Text>
             <TouchableOpacity
               style={styles.backArrowContainer}
@@ -53,7 +53,7 @@ const ViewRefueling = () => {
 
         <View style={styles.bottomContainer}>
           <Text style={styles.createdAt}>
-            Added on {Helpers.formatDateType2(refuelling.createdAt)}
+            Added on {Helpers.formatDateType2(refuelling?.createdAt)}
           </Text>
         </View>
       </View>
@@ -61,19 +61,19 @@ const ViewRefueling = () => {
       <View style={styles.infoCard}>
         <View style={styles.infoline}>
           <Text style={styles.infoTitle}>Start Reading</Text>
-          <Text style={styles.infoValue}>{refuelling.startReading} kms</Text>
+          <Text style={styles.infoValue}>{refuelling?.startReading} kms</Text>
         </View>
         <View style={styles.infoline}>
           <Text style={styles.info}>End Reading</Text>
-          <Text style={styles.info}>{refuelling.endReading} kms</Text>
+          <Text style={styles.info}>{refuelling?.endReading} kms</Text>
         </View>
         <View style={styles.infoline}>
           <Text style={styles.info}>Consumed</Text>
-          <Text style={styles.info}>{refuelling.consumed}L</Text>
+          <Text style={styles.info}>{refuelling?.consumed}L</Text>
         </View>
         <View style={styles.infoline}>
           <Text style={styles.info}>Price</Text>
-          <Text style={styles.info}>S$ {refuelling.price}</Text>
+          <Text style={styles.info}>S$ {refuelling?.price}</Text>
         </View>
       </View>
 
@@ -178,7 +178,9 @@ const styles = StyleSheet.create({
     color: Colors.textPrimary,
   },
   footerButton: {
-    marginTop: "86%",
+    position: "absolute",
+    bottom: 0,
+    paddingBottom: 28,
   },
 });
 

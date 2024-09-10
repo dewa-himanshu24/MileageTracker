@@ -1,5 +1,15 @@
 import React, { useState, useRef, useEffect } from "react";
-import { View, Text, Image, StyleSheet, TouchableOpacity, TextInput, FlatList, SafeAreaView, Platform, TouchableWithoutFeedback,
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  TextInput,
+  FlatList,
+  SafeAreaView,
+  Platform,
+  TouchableWithoutFeedback,
 } from "react-native";
 import { icons } from "../../constants/index.js";
 import { Colors } from "../../styles/index.js";
@@ -19,17 +29,17 @@ const MtDropdown = ({
   iconWidth = 20,
   menuHeight = 300,
   value,
+  disabled,
 }) => {
   const [selectedItem, setSelectedItem] = useState(value?.name || placeholder);
   const [showDropdown, setShowDropdown] = useState(false);
   const [data, setData] = useState(dataList);
-  console.log("Dewa1 MtDropdown value", JSON.stringify(value));
   const searchRef = useRef();
 
   useEffect(() => {
     setSelectedItem(value?.name || placeholder);
   }, [value]);
-  
+
   const handleSearch = (text) => {
     if (text) {
       setData(
@@ -68,23 +78,38 @@ const MtDropdown = ({
             { marginTop: dropdownMarginTop },
           ]}
           onPress={() => {
-            setShowDropdown(!showDropdown);
-            handleSearch("");
+            if (!disabled) {
+              setShowDropdown(!showDropdown);
+              handleSearch("");
+            }
           }}
         >
           <View>
-            {label && (
-              <Text style={styles.dropdownLabel}>{label}</Text>
-            )}
-            <Text style={[styles.dropdownText, {fontSize: dropdownTextSize}]}>{selectedItem}</Text>
+            {label && <Text style={styles.dropdownLabel}>{label}</Text>}
+            <Text style={[styles.dropdownText, { fontSize: dropdownTextSize }]}>
+              {selectedItem}
+            </Text>
           </View>
-          <Image
-            source={showDropdown ? icons.down : icons.down}
-            style={[styles.icon, { height: iconHeight }, { width: iconWidth }, {transform: [{ rotate: showDropdown ? "180deg" : "0deg" }]}]}
-          />
+          {!disabled && (
+            <Image
+              source={showDropdown ? icons.down : icons.down}
+              style={[
+                styles.icon,
+                { height: iconHeight },
+                { width: iconWidth },
+                { transform: [{ rotate: showDropdown ? "180deg" : "0deg" }] },
+              ]}
+            />
+          )}
         </TouchableOpacity>
         {showDropdown && (
-          <View style={[styles.dropdownMenu, { width: width }, { height: menuHeight }]}>
+          <View
+            style={[
+              styles.dropdownMenu,
+              { width: width },
+              { height: menuHeight },
+            ]}
+          >
             {isSearchable && (
               <TextInput
                 placeholder="Search Vehicles"
@@ -176,7 +201,8 @@ const styles = StyleSheet.create({
   },
 });
 
-{/* <MtDropdown
+{
+  /* <MtDropdown
   showLabel
   isSearchable
   width={324}
@@ -184,14 +210,17 @@ const styles = StyleSheet.create({
   dropdownBackgroundColor={Colors.inputBackground}
   dataList={vehicles}
   dropdownTextSize={16}
-/>; */}
+/>; */
+}
 
-{/* <MtDropdown
+{
+  /* <MtDropdown
   width={156}
   dropdownHeight={34}
   dropdownBackgroundColor={Colors.inputBackground}
   dataList={vehicles}
   dropdownTextSize={14}
-/>; */}
+/>; */
+}
 
 export default MtDropdown;

@@ -41,7 +41,6 @@ const LandingPage = ({ users }) => {
   const handleProfileSelection = async (profileId) => {
     const selectedProfile = await UserServices.getUserById(profileId);
     // Set usr in Store
-    console.log("Dewa1 LandingPage selectedProfile", JSON.stringify(selectedProfile));
     if (selectedProfile?.passcode) {
       router.push("/sign-in");
     } else {

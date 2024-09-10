@@ -25,7 +25,6 @@ const FormRefueling = () => {
     useStore();
   const { refuellingId } = useLocalSearchParams();
 
-  
   const [selectedVehicle, setSelectedVehicle] = useState(null);
   const [refuellingDate, setrefuellingDate] = useState(new Date());
   const [startReading, setStartReading] = useState("");
@@ -35,7 +34,25 @@ const FormRefueling = () => {
   const [formSubmitted, setFormSubmitted] = useState(false);
 
   useEffect(() => {
-    setSelectedVehicle(vehicle ? { ...vehicle, name: vehicle?.vehicleName } : null);
+    console.log("FormRefueling mount3 vehicle", JSON.stringify(vehicle));
+    console.log("FormRefueling mount3 refuelling", JSON.stringify(refuelling));
+    setSelectedVehicle(
+      vehicle ? { ...vehicle, name: vehicle?.vehicleName } : null
+    );
+
+    if (refuellingId !== "new") {
+      console.log("FormRefueling refuellingId", refuellingId);
+      console.log("FormRefueling refuelling", refuelling);
+      setrefuellingDate(
+        refuelling?.refuellingDate
+          ? new Date(refuelling?.refuellingDate)
+          : new Date()
+      );
+      setStartReading(Number(refuelling["startReading"]));
+      setEndReading(Number(refuelling?.endReading));
+      setConsumed(Number(refuelling?.consumed));
+      setPrice(Number(refuelling?.price));
+    }
   }, [vehicle]);
 
   const vehicles = user?.vehicles ? Object.values(user?.vehicles) : [];
@@ -60,8 +77,7 @@ const FormRefueling = () => {
       endReading &&
       consumed &&
       price &&
-      Number(endReading.trim()) > Number(startReading.trim()) &&
-      Helpers.validateOdometerReading(selectedVehicle, startReading)
+      Helpers.validateOdometerReading(selectedVehicle, startReading, endReading)
     ) {
       const payload = {
         refuelling_id: Crypto.randomUUID(),
@@ -107,7 +123,7 @@ const FormRefueling = () => {
 
         {/* Header */}
         <View style={styles.headerContainer}>
-          <Text style={styles.headerText}>Add Refuelling Record</Text>
+          <Text style={styles.headerText}>{refuellingId !== "new" ? 'Update' : 'Add'} Refuelling Record</Text>
         </View>
 
         <View style={styles.fullScreenOverlay}>
@@ -126,6 +142,7 @@ const FormRefueling = () => {
             dataList={dataList}
             dropdownTextSize={16}
             menuHeight={170}
+            disabled={refuellingId !== "new"}
           />
         </View>
 
@@ -177,7 +194,7 @@ const FormRefueling = () => {
         <View
           style={[
             styles.odometerContainer,
-            { marginTop: 20, marginBottom: 241 },
+            { marginTop: 20, },
           ]}
         >
           <Text style={styles.label}>Fuel</Text>
@@ -228,7 +245,7 @@ const FormRefueling = () => {
 
           <View style={styles.rightButton}>
             <MtButton
-              title="Add"
+              title={refuellingId !== "new" ? "Update" : "Add"}
               textColor={Colors.textSecondary}
               marginTop={18}
               style={styles.button}
@@ -338,6 +355,8 @@ const styles = StyleSheet.create({
     height: 96,
     alignSelf: "center",
     paddingBottom: 28,
+    position: "absolute",
+    bottom: 0,
   },
 });
 

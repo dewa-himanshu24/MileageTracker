@@ -18,10 +18,8 @@ import MtDropdown from "../../components/common/MtDropdown.jsx";
 const Home = () => {
   const { user, vehicle, setVehicle } = useStore();
   const [selectedVehicle, setSelectedVehicle] = useState(vehicle ? { ...vehicle, name: vehicle?.vehicleName } : null);
-  console.log("Dewa1 Home user", JSON.stringify(vehicle));
 
   useEffect(() => {
-    console.log("Dewa3 Home user", JSON.stringify(vehicle));
     setSelectedVehicle(vehicle ? { ...vehicle, name: vehicle?.vehicleName } : null);
   }, [vehicle]);
 

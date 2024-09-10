@@ -21,7 +21,7 @@ class Helpers {
     return formattedDate.replace(/ /g, "'").replace(",", ", ");
   }
 
-  validateOdometerReading = (selectedVehicle, newStartReading) => {
+  validateOdometerReading = (selectedVehicle, newStartReading, newEndReading) => {
     const refuellings = selectedVehicle.refuellings;
   
     if (refuellings.length === 0) {
@@ -33,11 +33,18 @@ class Helpers {
   
     // Get the latest endReading from the most recent refuelling
     const lastEndReading = parseInt(latestRefuelling.endReading, 10);
+
+    if (Number(newEndReading) <= Number(newStartReading)) {
+      alert("End reading must be greater than the start reading");
+      console.log("End reading is less than or equal to the start reading");
+      return false
+    }
   
-    if (newStartReading > lastEndReading) {
+    if (newStartReading >= lastEndReading) {
       console.log("New start reading is greater than the last end reading", true);
       return true;
     } else {
+      alert(`The start reading you entered (${newStartReading} km) is lower than your last recorded end reading of ${lastEndReading} km. Please enter a start reading greater than ${lastEndReading} km.`);
       console.log("New start reading is less than or equal to the last end reading", false);
       return false; 
     }

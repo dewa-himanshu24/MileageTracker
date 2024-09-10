@@ -9,9 +9,7 @@ import MtButton from "../../components/common/MtButton.jsx";
 
 function Vehicles() {
   const { user } = useStore();
-  console.log("Dewa1 vehicles user", JSON.stringify(user));
   let vehicles = Object.values(user?.vehicles) || [];
-  console.log("Dewa2 vehicles user", JSON.stringify(user));
   return (
     <SafeAreaView style={styles.container}>
       <View style={[styles.headerContainer]}>
