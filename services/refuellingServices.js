@@ -20,7 +20,6 @@ class RefuellingServices {
     return { user: user, vehicle: vehicle, refuelling: newRefuelling };
   }
 
-
 }
 
 export default new RefuellingServices();

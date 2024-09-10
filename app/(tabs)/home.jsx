@@ -28,10 +28,19 @@ const Home = () => {
     vehicle ? { ...vehicle, name: vehicle?.vehicleName } : null
   );
 
+  useEffect(() => { 
+    console.log("Dewa Home user", JSON.stringify(user));
+    setSelectedVehicle(
+      vehicle ? { ...vehicle, name: vehicle?.vehicleName } : null
+    );
+    setRefuellings(vehicle?.refuellings || []);
+  }, []);
+
   useEffect(() => {
     setSelectedVehicle(
       vehicle ? { ...vehicle, name: vehicle?.vehicleName } : null
     );
+    setRefuellings(vehicle?.refuellings || []);
   }, [vehicle]);
 
   // Check if user or vehicles exist to avoid null reference issues

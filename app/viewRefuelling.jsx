@@ -19,6 +19,10 @@ const ViewRefueling = () => {
     router.push(`/formRefuelling/${refuelling?.refuelling_id}`);
   }
 
+  const handleDeleteRefuelling = () => {
+    console.log("Delete refuelling");
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.containerWrappr}>
@@ -40,7 +44,7 @@ const ViewRefueling = () => {
             </Text>
             <TouchableOpacity
               style={styles.backArrowContainer}
-              // onPress={handleCancel}
+              onPress={handleDeleteRefuelling}
             >
               <Image source={icons.delete2} style={styles.delete} />
             </TouchableOpacity>
