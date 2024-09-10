@@ -13,43 +13,87 @@ class Helpers {
 
   formatDateType2 = (dateString) => {
     const date = new Date(dateString);
-  
-    const options = { weekday: 'short', day: '2-digit', month: 'short', year: '2-digit' };
-  
-    const formattedDate = date.toLocaleDateString('en-GB', options);
-    
-    return formattedDate.replace(/ /g, "'").replace(",", ", ");
-  }
 
-  validateOdometerReading = (selectedVehicle, newStartReading, newEndReading) => {
+    const options = {
+      weekday: "short",
+      day: "2-digit",
+      month: "short",
+      year: "2-digit",
+    };
+
+    const formattedDate = date.toLocaleDateString("en-GB", options);
+
+    return formattedDate.replace(/ /g, "'").replace(",", ", ");
+  };
+
+  validateOdometerReading = (
+    selectedVehicle,
+    newStartReading,
+    newEndReading
+  ) => {
     const refuellings = selectedVehicle?.refuellings || [];
-  
+
     if (refuellings?.length === 0) {
       return true;
     }
-  
+
     // Sort refuellings by refuelling date to get the most recent one
-    const latestRefuelling = refuellings.sort((a, b) => new Date(b.refuellingDate) - new Date(a.refuellingDate))[0];
-  
+    const latestRefuelling = refuellings.sort(
+      (a, b) => new Date(b.refuellingDate) - new Date(a.refuellingDate)
+    )[0];
+
     // Get the latest endReading from the most recent refuelling
     const lastEndReading = parseInt(latestRefuelling.endReading, 10);
 
     if (Number(newEndReading) <= Number(newStartReading)) {
       alert("End reading must be greater than the start reading");
       console.log("End reading is less than or equal to the start reading");
-      return false
+      return false;
     }
-  
+
     if (newStartReading >= lastEndReading) {
-      console.log("New start reading is greater than the last end reading", true);
+      console.log(
+        "New start reading is greater than the last end reading",
+        true
+      );
       return true;
     } else {
-      alert(`The start reading you entered (${newStartReading} km) is lower than your last recorded end reading of ${lastEndReading} km. Please enter a start reading greater than ${lastEndReading} km.`);
-      console.log("New start reading is less than or equal to the last end reading", false);
-      return false; 
+      alert(
+        `The start reading you entered (${newStartReading} km) is lower than your last recorded end reading of ${lastEndReading} km. Please enter a start reading greater than ${lastEndReading} km.`
+      );
+      console.log(
+        "New start reading is less than or equal to the last end reading",
+        false
+      );
+      return false;
     }
   };
-  
+
+  calculateFuelConsumption(refuellings) {
+    let totalMileage = 0;
+    const totalRefuellings = refuellings.length;
+
+    let lastFuelConsumption = null;
+
+    refuellings.forEach((refuel) => {
+      const startReading = parseFloat(refuel.startReading);
+      const endReading = parseFloat(refuel.endReading);
+      const consumed = parseFloat(refuel.consumed);
+
+      // Calculate mileage for each refuelling
+      const mileage = (endReading - startReading) / consumed;
+      totalMileage += mileage;
+
+      lastFuelConsumption = mileage;
+    });
+
+    const averageFuelConsumption = totalMileage / totalRefuellings;
+
+    return {
+      averageFuelConsumption: averageFuelConsumption?.toFixed(2),
+      lastFuelConsumption: lastFuelConsumption?.toFixed(2),
+    };
+  }
 }
 
 export default new Helpers();

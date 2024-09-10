@@ -20,6 +20,7 @@ import EmptyHomeState from "../../components/common/EmptyHomeState.jsx";
 import MtDropdown from "../../components/common/MtDropdown.jsx";
 import RefuelingPriceBarChart from "../../components/common/RefuelingPriceBarChart.jsx";
 import FuelCard from "../../components/common/FuelCard.jsx";
+import helpers from "../../utils/helpers.js";
 
 const Home = () => {
   const { user, vehicle, setVehicle, refuellings, setRefuellings } = useStore();
@@ -52,6 +53,9 @@ const Home = () => {
     setSelectedVehicle(value);
     setRefuellings(value.refuellings);
   };
+
+  const averageFuelConsumption = helpers.calculateFuelConsumption(refuellings || [])?.averageFuelConsumption;
+  const lastFuelConsumption = helpers.calculateFuelConsumption(refuellings || [])?.lastFuelConsumption;
 
   return (
     <SafeAreaView style={styles.container}>
@@ -151,13 +155,13 @@ const Home = () => {
                   <View style={styles.insightWrapper}>
                     <View style={styles.insightInfo}>
                       <Text style={styles.label}>Avg Fuel Consumption</Text>
-                      <Text style={styles.label}>20 km/l</Text>
+                      <Text style={styles.label}>{averageFuelConsumption}{' '}km/l</Text>
                     </View>
                   </View>
                   <View style={styles.insightWrapper}>
                     <View style={styles.insightInfo}>
                       <Text style={styles.label}>Last Fuel Consumption</Text>
-                      <Text style={styles.label}>20 km/l</Text>
+                      <Text style={styles.label}>{lastFuelConsumption}{' '}km/l</Text>
                     </View>
                   </View>
                 </View>
