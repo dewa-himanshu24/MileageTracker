@@ -117,7 +117,7 @@ const Home = () => {
               style={styles.vehicleImage}
             />
           </View>
-          {!refuellings.length && (
+          {!refuellings?.length && (
             <View style={styles.noRefuellingContainer}>
               <View style={styles.noRefuellingImgContainer}>
                 <Image

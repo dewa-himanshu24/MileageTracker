@@ -15,7 +15,7 @@ import { UserServices, clearAsyncStorage } from "../services/index.js";
 import useStore from "../store/index.js";
 
 const Profile = ({}) => {
-  const { user, setRefuellings } = useStore();
+  const { user, setUsers, setUser, setRefuellings, setVehicle } = useStore();
 
   const handleLogout = async () => {
     await UserServices.logout();
@@ -24,9 +24,13 @@ const Profile = ({}) => {
   }
 
   const handleDeleteAccount = async () => {
-    const updatedUsers = await UserServices.deleteAccount();
+    const updatedUsers = await UserServices.deleteAccount(user?.user_id);
     console.log("Dewa Profile updatedUsers", updatedUsers);
     // clearAsyncStorage();
+    setUsers(null);
+    setUser(null);
+    setVehicle(null);
+    setRefuellings(null);
     router.push("/");
   }
 

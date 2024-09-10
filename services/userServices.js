@@ -34,6 +34,7 @@ class UserServices {
   async getLoggedInUser() {
     try {
       const user = await AsyncStorage.getItem(LOGGEDIN_USER_KEY);
+      console.log('User logged in:', user);
       return user ? JSON.parse(user) : null;
     } catch (error) {
       console.error('Error getting logged in user:', error);
@@ -68,21 +69,20 @@ class UserServices {
     }
   }
 
-  async deleteAccount() {
+  async deleteAccount(userId) {
     try {
-      const user = await this.getLoggedInUser();
-      if (!user) {
+      console.log('deleteAccount UserId:', userId);
+      if (!userId) {
         console.error('No user logged in');
         return;
       }
 
       const users = await this.getAllUsers();
-      delete users[user.user_id];
+      delete users[userId];
       await AsyncStorage.setItem(USERS_KEY, JSON.stringify(users));
       await AsyncStorage.removeItem(LOGGEDIN_USER_KEY);
       console.log('Account deleted successfully!');
 
-      return users;
     } catch (error) {
       console.error('Error deleting account:', error);
     }

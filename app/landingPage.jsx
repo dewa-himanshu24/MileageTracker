@@ -43,7 +43,6 @@ const LandingPage = ({ users }) => {
     if (selectedProfile?.passcode) {
       router.push("/sign-in");
     } else {
-      // await UserServices.setLoggedInUser(selectedProfile);
       router.push("/home");
     }
 
