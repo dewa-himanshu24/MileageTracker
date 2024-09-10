@@ -107,9 +107,9 @@ const Performance = () => {
                 <Text style={styles.selectText}>
                   Vehicle mileage performance
                 </Text>
-                <View style={styles.analytic}>
+                {/* <View style={styles.analytic}> */}
                   <RefuelingPriceBarChart />
-                </View>
+                {/* </View> */}
               </View>
             </View>
           </ScrollView>
@@ -186,8 +186,8 @@ const styles = StyleSheet.create({
 
   analyticContainer: {
     height: 217,
-    width: 318,
     marginTop: 36,
+    paddingHorizontal: 20,
   },
 
   analytic: {

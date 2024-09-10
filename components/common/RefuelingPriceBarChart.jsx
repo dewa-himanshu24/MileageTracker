@@ -2,6 +2,7 @@ import React from "react";
 import { View, Dimensions } from "react-native";
 import { BarChart } from "react-native-chart-kit";
 import useStore from "../../store";
+import { Colors } from "../../styles";
 
 const processRefuellingsData = (refuellings) => {
   const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -52,48 +53,66 @@ const processRefuellingsData = (refuellings) => {
   return { labels, data };
 };
 
+const getYAxisMaxValue = (max) => {
+  if (max <= 1000) {
+    return Math.ceil(max / 200) * 200; // If the max is under 1000, round to the nearest 200
+  }
+  return Math.ceil(max / 1000) * 1000; // If over 1000, round to the nearest 1000
+};
+
 const screenWidth = Dimensions.get("window").width;
 
 const chartConfig = {
   backgroundGradientFrom: "#ffffff",
   backgroundGradientTo: "#ffffff",
-  decimalPlaces: 0, // Optional, defaults to 2dp
-  color: (opacity = 1) => `rgba(255, 0, 0, ${opacity})`, // Bar color (red in this case)
-  labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`, // Label color (black)
+  decimalPlaces: 0,
+  color: (opacity = 1) => Colors.textTertiary,
+  labelColor: (opacity = 1) => Colors.textPrimary,
   barPercentage: 0.5,
+  propsForBackgroundLines: {
+    strokeDasharray: "",
+    stroke: 'rgba(206, 216, 222, 1)',
+    strokeWidth: 1,
+  },
   style: {
     borderRadius: 16,
   },
 };
 
 const RefuelingPriceBarChart = () => {
-  const { refuellings } =
-    useStore();
+  const { refuellings } = useStore();
 
-    const { labels, data } = processRefuellingsData(refuellings);
+  const { labels, data } = processRefuellingsData(refuellings);
+
+  // Get max value of the data and calculate the y-axis max label dynamically
+  const maxDataValue = Math.max(...data);
+  const yAxisMaxValue = getYAxisMaxValue(maxDataValue);
 
   return (
     <View>
       <BarChart
         data={{
-          labels, // Month names
+          labels,
           datasets: [
             {
-              data, // Refueling prices
+              data,
             },
           ],
         }}
-        width={screenWidth - 16} // Adjust width based on screen size
-        height={220}
-        yAxisLabel="₹"
-        yAxisSuffix="k"
+        width={screenWidth - 40}
+        height={200}
+        // yAxisLabel="₹"
+        yAxisLabel="$"
+        yAxisSuffix=""
+        yAxisInterval={yAxisMaxValue / 7}
         chartConfig={chartConfig}
-        verticalLabelRotation={30} // Rotate labels for better readability
-        fromZero // Ensure the y-axis starts from zero
+        verticalLabelRotation={0}
+        fromZero
         style={{
-          marginVertical: 8,
-          borderRadius: 16,
+          borderRadius: 8,
+          paddingTop: 20,
         }}
+        yAxisMax={yAxisMaxValue} 
       />
     </View>
   );
