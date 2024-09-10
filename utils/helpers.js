@@ -29,7 +29,8 @@ class Helpers {
   validateOdometerReading = (
     selectedVehicle,
     newStartReading,
-    newEndReading
+    newEndReading,
+    refuellingId
   ) => {
     const refuellings = selectedVehicle?.refuellings || [];
 
@@ -58,14 +59,18 @@ class Helpers {
       );
       return true;
     } else {
-      alert(
-        `The start reading you entered (${newStartReading} km) is lower than your last recorded end reading of ${lastEndReading} km. Please enter a start reading greater than ${lastEndReading} km.`
-      );
-      console.log(
-        "New start reading is less than or equal to the last end reading",
-        false
-      );
-      return false;
+      if (refuellingId === "new") {
+        alert(
+          `The start reading you entered (${newStartReading} km) is lower than your last recorded end reading of ${lastEndReading} km. Please enter a start reading greater than ${lastEndReading} km.`
+        );
+        console.log(
+          "New start reading is less than or equal to the last end reading",
+          false
+        );
+        return false;
+      } else {
+        return true;
+      }
     }
   };
 

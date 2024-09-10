@@ -8,12 +8,13 @@ const CustomTextInput = ({ onChangeText, label,
   placeholder = 'Enter vehicle name',
   keyboardType = 'default',
   borderColor = 'transparent',
+  value,
 }) => {
-  const [vehicleName, setVehicleName] = useState('');
+  // const [vehicleName, setVehicleName] = useState('');
 
   const handleTextChange = (text) => {
     onChangeText(text);
-    setVehicleName(text);
+    // setVehicleName(text);
   };
 
   return (
@@ -23,7 +24,7 @@ const CustomTextInput = ({ onChangeText, label,
         style={[styles.input]}
         placeholder={placeholder}
         placeholderTextColor="#A9A9A9"
-        value={vehicleName}
+        value={value}
         onChangeText={handleTextChange}
         keyboardType={keyboardType}
       />

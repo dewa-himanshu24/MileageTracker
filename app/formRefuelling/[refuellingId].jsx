@@ -48,10 +48,10 @@ const FormRefueling = () => {
           ? new Date(refuelling?.refuellingDate)
           : new Date()
       );
-      setStartReading(Number(refuelling["startReading"]));
-      setEndReading(Number(refuelling?.endReading));
-      setConsumed(Number(refuelling?.consumed));
-      setPrice(Number(refuelling?.price));
+      setStartReading(refuelling?.startReading);
+      setEndReading(refuelling?.endReading);
+      setConsumed(refuelling?.consumed);
+      setPrice(refuelling?.price);
     }
   }, [vehicle]);
 
@@ -77,10 +77,9 @@ const FormRefueling = () => {
       endReading &&
       consumed &&
       price &&
-      Helpers.validateOdometerReading(selectedVehicle, startReading, endReading)
+      Helpers.validateOdometerReading(selectedVehicle, startReading, endReading, refuellingId)
     ) {
       const payload = {
-        refuelling_id: Crypto.randomUUID(),
         user: user,
         vehicle: vehicle,
         vehicle_id: selectedVehicle.id,
@@ -91,8 +90,17 @@ const FormRefueling = () => {
         price: price,
         createdAt: new Date(),
       };
-      const updateUser = RefuellingServices.addRefuelling(payload);
 
+      let updateUser = null;
+      if (refuellingId !== "new") {
+        console.log("FormRefueling refuellingId", refuellingId);
+        payload["refuelling_id"] = refuellingId;
+        updateUser = RefuellingServices.updateRefuelling(payload);
+      } else {
+        payload["refuelling_id"] = Crypto.randomUUID(),
+        updateUser = RefuellingServices.addRefuelling(payload);
+      }
+      console.log("FormRefueling updateUser", JSON.stringify(updateUser));
       setUser(updateUser?.user);
       setVehicle(updateUser?.vehicle);
       setRefuelling(updateUser?.refuelling);

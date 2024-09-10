@@ -15,12 +15,11 @@ import MTButton from "../components/common/MtButton.jsx";
 import { Colors } from "../styles/index.js";
 import MtButton from "../components/common/MtButton.jsx";
 import useStore from "../store/index.js";
-import '../utils/prototypes.js';
+import "../utils/prototypes.js";
 import { UserServices } from "../services/index.js";
 
-
 const LandingPage = ({ users }) => {
-  const { setUser } = useStore();
+  const { setUser, setRefuellings, setVehicle } = useStore();
 
   const [hasUsers, setHasUsers] = useState(false);
   const [userProfiles, setUserProfiles] = useState([]);
@@ -36,7 +35,7 @@ const LandingPage = ({ users }) => {
 
   const handleAddUser = () => {
     router.push("/sign-up");
-  }
+  };
 
   const handleProfileSelection = async (profileId) => {
     const selectedProfile = await UserServices.getUserById(profileId);
@@ -47,8 +46,12 @@ const LandingPage = ({ users }) => {
       // await UserServices.setLoggedInUser(selectedProfile);
       router.push("/home");
     }
+
+    const selectedVehicle = Object.values(selectedProfile?.vehicles)?.[0];
     setUser(selectedProfile);
-  }
+    setVehicle({...selectedVehicle, name: selectedVehicle?.vehicleName} || null);
+    setRefuellings(Object.values(selectedProfile?.vehicles)?.[0]?.refuellings);
+  };
 
   return (
     <SafeAreaView>
@@ -110,22 +113,28 @@ const LandingPage = ({ users }) => {
                       iconMarginLeft={0}
                       onPress={handleAddUser}
                     />
-                    <Text style={styles.profileName}>{item?.nickname || item?.userName}</Text>
+                    <Text style={styles.profileName}>
+                      {item?.nickname || item?.userName}
+                    </Text>
                   </TouchableOpacity>
                 ) : (
-                  <TouchableOpacity 
+                  <TouchableOpacity
                     style={styles.profileContainer}
                     onPress={() => handleProfileSelection(item?.user_id)}
                   >
                     <View style={styles.defaultProfile}>
-                      <Text style={styles.initial}>{item?.nickname?.toUpperCase()?.charAt(0) || item?.userName?.toUpperCase()?.charAt(0)}</Text>
+                      <Text style={styles.initial}>
+                        {item?.nickname?.toUpperCase()?.charAt(0) ||
+                          item?.userName?.toUpperCase()?.charAt(0)}
+                      </Text>
                     </View>
                     <Text
                       style={styles.profileName}
                       numberOfLines={1}
                       ellipsizeMode="tail"
                     >
-                      {item?.nickname?.toProperCase() || item?.userName?.toProperCase()}
+                      {item?.nickname?.toProperCase() ||
+                        item?.userName?.toProperCase()}
                     </Text>
                   </TouchableOpacity>
                 )
