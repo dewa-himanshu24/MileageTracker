@@ -13,12 +13,13 @@ import NoVehicleContainer from "../../components/common/NoVehicleContainer.jsx";
 import { Colors } from "../../styles/index.js";
 import useStore from "../../store/index.js";
 import RefuelingPriceBarChart from "../../components/common/RefuelingPriceBarChart.jsx";
+import MileageLineChart from "../../components/common/MileageLineChart.jsx";
 
 const Performance = () => {
   const { user, setUser, vehicle, setVehicle, refuellings, setRefuellings } =
     useStore();
 
-    console.log("Dewa Performance refuellings", JSON.stringify(refuellings));
+  console.log("Dewa Performance refuellings", JSON.stringify(refuellings));
   const [selectedVehicle, setSelectedVehicle] = useState(null);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
@@ -62,7 +63,7 @@ const Performance = () => {
         <>
           <View style={styles.selectContainer}>
             <Text style={styles.selectText}>Choose the vehicle</Text>
-            
+
             <MtDropdown
               value={selectedVehicle}
               onChange={handleSelectVehicle}
@@ -100,7 +101,9 @@ const Performance = () => {
 
               <View style={styles.analyticContainer}>
                 <Text style={styles.selectText}>Money spent on fuel</Text>
-                <View style={styles.analytic}></View>
+                {/* <View style={styles.analytic}> */}
+                <RefuelingPriceBarChart />
+                {/* </View> */}
               </View>
 
               <View style={[styles.analyticContainer, { marginBottom: 36 }]}>
@@ -108,7 +111,7 @@ const Performance = () => {
                   Vehicle mileage performance
                 </Text>
                 {/* <View style={styles.analytic}> */}
-                  <RefuelingPriceBarChart />
+                <MileageLineChart />
                 {/* </View> */}
               </View>
             </View>
