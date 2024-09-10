@@ -12,12 +12,13 @@ import MtDropdown from "../../components/common/MtDropdown.jsx";
 import NoVehicleContainer from "../../components/common/NoVehicleContainer.jsx";
 import { Colors } from "../../styles/index.js";
 import useStore from "../../store/index.js";
-import RefuellingPriceChart from "../../components/common/RefuellingPriceChart.jsx";
+import RefuelingPriceBarChart from "../../components/common/RefuelingPriceBarChart.jsx";
 
 const Performance = () => {
   const { user, setUser, vehicle, setVehicle, refuellings, setRefuellings } =
     useStore();
 
+    console.log("Dewa Performance refuellings", JSON.stringify(refuellings));
   const [selectedVehicle, setSelectedVehicle] = useState(null);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
@@ -107,7 +108,7 @@ const Performance = () => {
                   Vehicle mileage performance
                 </Text>
                 <View style={styles.analytic}>
-                  <RefuellingPriceChart />
+                  <RefuelingPriceBarChart />
                 </View>
               </View>
             </View>
