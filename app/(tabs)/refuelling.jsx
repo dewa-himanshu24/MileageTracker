@@ -57,7 +57,7 @@ const Refuelling = () => {
       <View
         style={[
           styles.headerContainer,
-          { height: !!vehicles?.length ? 148 : 84 },
+          { height: !!vehicles?.length ? 148 : 84, zIndex: 300 },
         ]}
       >
         <Text style={styles.header}>Refuelling</Text>

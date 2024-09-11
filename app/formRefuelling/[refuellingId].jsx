@@ -88,7 +88,7 @@ const FormRefueling = () => {
       const payload = {
         user: user,
         vehicle: vehicle,
-        vehicle_id: selectedVehicle.id,
+        vehicle_id: selectedVehicle.vehicle_id,
         refuellingDate: refuellingDate,
         startReading: startReading,
         endReading: endReading,

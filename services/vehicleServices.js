@@ -21,7 +21,7 @@ class VehicleServices {
 
     // Add the new vehicle to the user's vehicles
     user.vehicles[vehicle_id] = newVehicle;
-    console.log("Dewa VehicleServices user", user);
+    console.log("Dewa VehicleServices user", JSON.stringify(user));
     return { user, vehicle: newVehicle };
   }
 
