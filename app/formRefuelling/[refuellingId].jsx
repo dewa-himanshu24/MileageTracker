@@ -7,6 +7,7 @@ import {
   SafeAreaView,
   KeyboardAvoidingView,
   Platform,
+  ScrollView,
 } from "react-native";
 import { router, useLocalSearchParams } from "expo-router";
 import AntDesign from "@expo/vector-icons/AntDesign";
@@ -77,7 +78,12 @@ const FormRefueling = () => {
       endReading &&
       consumed &&
       price &&
-      Helpers.validateOdometerReading(selectedVehicle, startReading, endReading, refuellingId)
+      Helpers.validateOdometerReading(
+        selectedVehicle,
+        startReading,
+        endReading,
+        refuellingId
+      )
     ) {
       const payload = {
         user: user,
@@ -97,8 +103,8 @@ const FormRefueling = () => {
         payload["refuelling_id"] = refuellingId;
         updateUser = RefuellingServices.updateRefuelling(payload);
       } else {
-        payload["refuelling_id"] = Crypto.randomUUID(),
-        updateUser = RefuellingServices.addRefuelling(payload);
+        (payload["refuelling_id"] = Crypto.randomUUID()),
+          (updateUser = RefuellingServices.addRefuelling(payload));
       }
       console.log("FormRefueling updateUser", JSON.stringify(updateUser));
       setUser(updateUser?.user);
@@ -115,163 +121,165 @@ const FormRefueling = () => {
         style={styles.container}
       >
         {/* Top container with back button */}
-        <View style={styles.topContainer}>
-          <TouchableOpacity
-            style={styles.backArrowContainer}
-            onPress={handleCancel}
-          >
-            <AntDesign
-              name="arrowleft"
-              size={24}
-              color={Colors.secondaryBackground}
-              style={styles.leftArrow}
-            />
-          </TouchableOpacity>
-        </View>
-
-        {/* Header */}
-        <View style={styles.headerContainer}>
-          <Text style={styles.headerText}>{refuellingId !== "new" ? 'Update' : 'Add'} Refuelling Record</Text>
-        </View>
-
-        <View style={styles.fullScreenOverlay}>
-          <MtDropdown
-            placeholder="Select a vehicle"
-            label="Vehicle Name"
-            isSearchable
-            value={selectedVehicle}
-            onChange={(value) => {
-              setSelectedVehicle(value);
-              setVehicle(value);
-            }}
-            width={324}
-            dropdownHeight={52}
-            dropdownBackgroundColor={Colors.inputBackground}
-            dataList={dataList}
-            dropdownTextSize={16}
-            menuHeight={170}
-            disabled={refuellingId !== "new"}
-          />
-        </View>
-
-        <View style={styles.datePickerContainer}>
-          <MtDatePicker
-            value={refuellingDate}
-            onChange={(date) => {
-              setrefuellingDate(date);
-            }}
-          />
-        </View>
-
-        <View style={styles.odometerContainer}>
-          <Text style={styles.label}>Odometer</Text>
-          <View style={styles.odometerInputContainer}>
-            <MtInputs
-              label="Start reading"
-              placeholder="Start reading"
-              value={startReading}
-              onChangeText={(text) => {
-                setStartReading(text.trim());
-              }}
-              width={158}
-              keyboardType="numeric"
-              borderColor={
-                formSubmitted && !startReading ? "red" : "transparent"
-              }
-            />
-            <MtInputs
-              label="End reading"
-              placeholder="End reading"
-              value={endReading}
-              onChangeText={(text) => {
-                setEndReading(text.trim());
-              }}
-              width={158}
-              keyboardType="numeric"
-              borderColor={
-                formSubmitted &&
-                (!endReading.trim() ||
-                  Number(endReading.trim()) <= Number(startReading.trim()))
-                  ? "red"
-                  : "transparent"
-              }
-            />
-          </View>
-        </View>
-
-        <View
-          style={[
-            styles.odometerContainer,
-            { marginTop: 20, },
-          ]}
+        <ScrollView
+          style={{
+            overflow: "scroll",
+          }}
         >
-          <Text style={styles.label}>Fuel</Text>
-          <View style={styles.odometerInputContainer}>
-            <MtInputs
-              label="Consumed (in L)"
-              placeholder="Consumed (in L)"
-              value={consumed}
-              onChangeText={(text) => {
-                setConsumed(text.trim());
-              }}
-              width={158}
-              keyboardType="numeric"
-              borderColor={
-                formSubmitted && !consumed.trim() ? "red" : "transparent"
-              }
-            />
-            <MtInputs
-              label="Price (in S$)"
-              placeholder="Price (in S$)"
-              value={price}
-              onChangeText={(text) => {
-                setPrice(text.trim());
-              }}
-              width={158}
-              keyboardType="numeric"
-              borderColor={
-                formSubmitted && !price.trim() ? "red" : "transparent"
-              }
-            />
-          </View>
-        </View>
-
-        {/* Buttons */}
-        <View style={styles.buttonContainer}>
-          <View style={styles.leftButton}>
-            <MtButton
-              title="Cancel"
-              marginTop={18}
-              style={styles.button}
+          <View style={styles.topContainer}>
+            <TouchableOpacity
+              style={styles.backArrowContainer}
               onPress={handleCancel}
-              width={158}
-              backgroundColor="transparent"
-              borderWidth={1}
-              textColor={Colors.textPrimary}
+            >
+              <AntDesign
+                name="arrowleft"
+                size={24}
+                color={Colors.secondaryBackground}
+                style={styles.leftArrow}
+              />
+            </TouchableOpacity>
+          </View>
+
+          {/* Header */}
+          <View style={styles.headerContainer}>
+            <Text style={styles.headerText}>
+              {refuellingId !== "new" ? "Update" : "Add"} Refuelling Record
+            </Text>
+          </View>
+
+          <View style={styles.fullScreenOverlay}>
+            <MtDropdown
+              placeholder="Select a vehicle"
+              label="Vehicle Name"
+              isSearchable
+              value={selectedVehicle}
+              onChange={(value) => {
+                setSelectedVehicle(value);
+                setVehicle(value);
+              }}
+              width={324}
+              dropdownHeight={52}
+              dropdownBackgroundColor={Colors.inputBackground}
+              dataList={dataList}
+              dropdownTextSize={16}
+              menuHeight={170}
+              disabled={refuellingId !== "new"}
             />
           </View>
 
-          <View style={styles.rightButton}>
-            <MtButton
-              title={refuellingId !== "new" ? "Update" : "Add"}
-              textColor={Colors.textSecondary}
-              marginTop={18}
-              style={styles.button}
-              onPress={handleAddRefuelling}
-              width={158}
-              disabled={
-                formSubmitted &&
-                (!selectedVehicle ||
-                  !refuellingDate ||
-                  !startReading ||
-                  !endReading ||
-                  !consumed ||
-                  !price)
-              }
+          <View style={styles.datePickerContainer}>
+            <MtDatePicker
+              value={refuellingDate}
+              onChange={(date) => {
+                setrefuellingDate(date);
+              }}
             />
           </View>
-        </View>
+
+          <View style={styles.odometerContainer}>
+            <Text style={styles.label}>Odometer</Text>
+            <View style={styles.odometerInputContainer}>
+              <MtInputs
+                label="Start reading"
+                placeholder="Start reading"
+                value={startReading}
+                onChangeText={(text) => {
+                  setStartReading(text.trim());
+                }}
+                width={158}
+                keyboardType="numeric"
+                borderColor={
+                  formSubmitted && !startReading ? "red" : "transparent"
+                }
+              />
+              <MtInputs
+                label="End reading"
+                placeholder="End reading"
+                value={endReading}
+                onChangeText={(text) => {
+                  setEndReading(text.trim());
+                }}
+                width={158}
+                keyboardType="numeric"
+                borderColor={
+                  formSubmitted &&
+                  (!endReading.trim() ||
+                    Number(endReading.trim()) <= Number(startReading.trim()))
+                    ? "red"
+                    : "transparent"
+                }
+              />
+            </View>
+          </View>
+
+          <View style={[styles.odometerContainer, { marginTop: 20 }]}>
+            <Text style={styles.label}>Fuel</Text>
+            <View style={styles.odometerInputContainer}>
+              <MtInputs
+                label="Consumed (in L)"
+                placeholder="Consumed (in L)"
+                value={consumed}
+                onChangeText={(text) => {
+                  setConsumed(text.trim());
+                }}
+                width={158}
+                keyboardType="numeric"
+                borderColor={
+                  formSubmitted && !consumed.trim() ? "red" : "transparent"
+                }
+              />
+              <MtInputs
+                label="Price (in S$)"
+                placeholder="Price (in S$)"
+                value={price}
+                onChangeText={(text) => {
+                  setPrice(text.trim());
+                }}
+                width={158}
+                keyboardType="numeric"
+                borderColor={
+                  formSubmitted && !price.trim() ? "red" : "transparent"
+                }
+              />
+            </View>
+          </View>
+        </ScrollView>
       </KeyboardAvoidingView>
+      {/* Buttons */}
+      <View style={styles.buttonContainer}>
+        <View style={styles.leftButton}>
+          <MtButton
+            title="Cancel"
+            marginTop={18}
+            style={styles.button}
+            onPress={handleCancel}
+            width={158}
+            backgroundColor="transparent"
+            borderWidth={1}
+            textColor={Colors.textPrimary}
+          />
+        </View>
+
+        <View style={styles.rightButton}>
+          <MtButton
+            title={refuellingId !== "new" ? "Update" : "Add"}
+            textColor={Colors.textSecondary}
+            marginTop={18}
+            style={styles.button}
+            onPress={handleAddRefuelling}
+            width={158}
+            disabled={
+              formSubmitted &&
+              (!selectedVehicle ||
+                !refuellingDate ||
+                !startReading ||
+                !endReading ||
+                !consumed ||
+                !price)
+            }
+          />
+        </View>
+      </View>
     </SafeAreaView>
   );
 };
@@ -279,6 +287,7 @@ const FormRefueling = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    position: "relative",
     backgroundColor: Colors.secondaryBackground,
   },
   topContainer: {
@@ -319,11 +328,13 @@ const styles = StyleSheet.create({
     height: 52,
     width: 324,
     marginBottom: 20,
+    zIndex: 500,
   },
   odometerContainer: {
     alignSelf: "center",
     width: 324,
     height: 76,
+    zIndex: 3,
   },
   label: {
     fontFamily: "Rubrik-Regular",
@@ -363,8 +374,6 @@ const styles = StyleSheet.create({
     height: 96,
     alignSelf: "center",
     paddingBottom: 28,
-    position: "absolute",
-    bottom: 0,
   },
 });
 

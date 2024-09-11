@@ -62,18 +62,24 @@ const Refuelling = () => {
       >
         <Text style={styles.header}>Refuelling</Text>
         {!!vehicles.length && (
-          <MtDropdown
-            placeholder="Select a vehicle"
-            isSearchable
-            value={selectedVehicle}
-            onChange={handleSelectVehicle}
-            dropdownTextSize={14}
-            dataList={dataList}
-            menuHeight={170}
-            onOpen={() => handleDropdownToggle(true)}
-            onClose={() => handleDropdownToggle(false)}
-            style={dropdownOpen ? { zIndex: 1000 } : { zIndex: 1 }}
-          />
+          <View
+            style={{
+              zIndex: 10,
+            }}
+          >
+            <MtDropdown
+              placeholder="Select a vehicle"
+              isSearchable
+              value={selectedVehicle}
+              onChange={handleSelectVehicle}
+              dropdownTextSize={14}
+              dataList={dataList}
+              menuHeight={170}
+              onOpen={() => handleDropdownToggle(true)}
+              onClose={() => handleDropdownToggle(false)}
+              style={dropdownOpen ? { zIndex: 1000 } : { zIndex: 1 }}
+            />
+          </View>
         )}
       </View>
 
@@ -249,7 +255,10 @@ const styles = StyleSheet.create({
     lineHeight: 17,
     color: "rgba(157, 177, 188, 1)",
   },
-  refuellingContainer: {},
+  refuellingContainer: {
+    position: "relative",
+    zIndex: 0,
+  },
   subScreenOverlay: {
     position: "absolute",
     top: 16,
@@ -287,11 +296,13 @@ const styles = StyleSheet.create({
     width: 324,
     paddingHorizontal: 20,
     marginLeft: 500,
+    position: "absolute",
+    bottom: 0,
   },
   footerButton: {
-    // position: "absolute",
-    // bottom: 20,
-    // right: 20,
+    position: "absolute",
+    bottom: 20,
+    right: 20,
   },
 });
 

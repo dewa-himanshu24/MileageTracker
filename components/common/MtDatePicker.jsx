@@ -24,18 +24,16 @@ const MtDatePicker = ({ value, onChange }) => {
   }, [value]);
 
   const toggleDatePicker = () => {
-    setShowPicker(!showPicker);
+    setShowPicker(true);
   };
 
   const onDatePickerChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
-    setShowPicker(Platform.OS === "ios"); // Keep picker open for iOS
     setDate(currentDate);
     onChange(currentDate);
 
     if (Platform.OS !== "ios") {
-      setDate(currentDate);
-      onChange(currentDate);
+      setShowPicker(false);
     }
   };
 
@@ -43,7 +41,14 @@ const MtDatePicker = ({ value, onChange }) => {
     <View style={styles.container}>
       {!showPicker && (
         <Pressable onPress={toggleDatePicker} style={styles.inputContainer}>
-          <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+          <View
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
             <View style={{ width: 268 }}>
               <Text style={styles.label}>Refueling Date</Text>
               <TextInput
@@ -60,13 +65,44 @@ const MtDatePicker = ({ value, onChange }) => {
       )}
 
       {showPicker && (
-        <DateTimePicker
-          value={date}
-          mode="date"
-          display={Platform.OS === "ios" ? "spinner" : "default"}
-          onChange={onDatePickerChange}
-          maximumDate={new Date()}
-        />
+        <View
+          style={
+            Platform.OS === "ios"
+              ? {
+                  backgroundColor: "#ebebeb",
+                  borderRadius: 10,
+                  shadowColor: "lightgray",
+                }
+              : {}
+          }
+        >
+          <DateTimePicker
+            value={date}
+            mode="date"
+            display={Platform.OS === "ios" ? "spinner" : "default"}
+            onChange={onDatePickerChange}
+            maximumDate={new Date()}
+          />
+          {Platform.OS === "ios" && (
+            <Pressable
+              onPress={() => {
+                setShowPicker(false);
+              }}
+            >
+              <Text
+                style={{
+                  color: "#2465c7",
+                  fontSize: 18,
+                  padding: 5,
+                  marginTop: 8,
+                  textAlign: "center",
+                }}
+              >
+                OK
+              </Text>
+            </Pressable>
+          )}
+        </View>
       )}
     </View>
   );

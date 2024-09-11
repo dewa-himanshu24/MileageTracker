@@ -8,6 +8,7 @@ import {
   StyleSheet,
   KeyboardAvoidingView,
   Platform,
+  ScrollView,
 } from "react-native";
 import { Colors } from "../styles/index.js";
 import { constant } from "../constants/index.js";
@@ -90,104 +91,110 @@ const AddVehicle = () => {
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.container}
       >
-        {/* Top container with back button */}
-        <View style={styles.topContainer}>
-          <TouchableOpacity
-            style={styles.backArrowContainer}
-            onPress={handleCancel}
-          >
-            <AntDesign
-              name="arrowleft"
-              size={24}
-              color={Colors.secondaryBackground}
-              style={styles.leftArrow}
-            />
-          </TouchableOpacity>
-        </View>
-
-        {/* Header */}
-        <View style={styles.headerContainer}>
-          <Text style={styles.headerText}>Add Vehicle</Text>
-        </View>
-
-        {/* Image picker */}
-        <View style={styles.imgContainer}>
-          <MtImagePicker image={imageURI} onChange={handleImageChange} />
-        </View>
-
-        {/* Vehicle Name Input */}
-        <View style={styles.inputTopContainer}>
-          <MtInputs
-            label="Vehicle Name"
-            value={vehicleName}
-            onChangeText={handleVehicleNameChange}
-            error={vehicleNameError}
-          />
-          {vehicleNameError ? (
-            <Text style={styles.errorText}>{vehicleNameError}</Text>
-          ) : null}
-        </View>
-
-        {/* Engine Capacity Input */}
-        <View style={styles.inputBottomContainer}>
-          <MtInputs
-            label="Engine Capacity"
-            value={engineCapacity}
-            onChangeText={handleEngineCapacityChange}
-            error={engineCapacityError}
-          />
-          {engineCapacityError ? (
-            <Text style={styles.errorText}>{engineCapacityError}</Text>
-          ) : null}
-        </View>
-
-        {/* Vehicle Type Dropdown */}
-        <View style={styles.dropdownContainer}>
-          <MtDropdown
-            showLabel
-            label="Vehicle Type"
-            placeholder="Select vehicle type"
-            onChange={handleVehicleTypeChange}
-            value={vehicleType}
-            width={324}
-            dropdownHeight={52}
-            dropdownBackgroundColor={Colors.inputBackground}
-            dataList={constant.vehicleType}
-            dropdownTextSize={16}
-            dropdownMarginTop={0}
-            menuHeight={170}
-            isSearchable={false}
-          />
-        </View>
-
-        {/* Buttons */}
-        <View style={styles.buttonContainer}>
-          <View style={styles.leftButton}>
-            <MtButton
-              title="Cancel"
-              marginTop={18}
-              style={styles.button}
+        <ScrollView
+          contentContainerStyle={{
+            paddingBottom: 30,
+          }}
+        >
+          {/* Top container with back button */}
+          <View style={styles.topContainer}>
+            <TouchableOpacity
+              style={styles.backArrowContainer}
               onPress={handleCancel}
-              width={158}
-              backgroundColor="transparent"
-              borderWidth={1}
-              textColor={Colors.textPrimary}
-            />
+            >
+              <AntDesign
+                name="arrowleft"
+                size={24}
+                color={Colors.secondaryBackground}
+                style={styles.leftArrow}
+              />
+            </TouchableOpacity>
           </View>
 
-          <View style={styles.rightButton}>
-            <MtButton
-              title="Add"
-              textColor={Colors.textSecondary}
-              marginTop={18}
-              style={styles.button}
-              onPress={handleAdd}
-              width={158}
-              disabled={!vehicleName || !engineCapacity || !vehicleType}
+          {/* Header */}
+          <View style={styles.headerContainer}>
+            <Text style={styles.headerText}>Add Vehicle</Text>
+          </View>
+
+          {/* Image picker */}
+          <View style={styles.imgContainer}>
+            <MtImagePicker image={imageURI} onChange={handleImageChange} />
+          </View>
+
+          {/* Vehicle Name Input */}
+          <View style={styles.inputTopContainer}>
+            <MtInputs
+              label="Vehicle Name"
+              value={vehicleName}
+              onChangeText={handleVehicleNameChange}
+              error={vehicleNameError}
+            />
+            {vehicleNameError ? (
+              <Text style={styles.errorText}>{vehicleNameError}</Text>
+            ) : null}
+          </View>
+
+          {/* Engine Capacity Input */}
+          <View style={styles.inputBottomContainer}>
+            <MtInputs
+              label="Engine Capacity"
+              value={engineCapacity}
+              onChangeText={handleEngineCapacityChange}
+              error={engineCapacityError}
+            />
+            {engineCapacityError ? (
+              <Text style={styles.errorText}>{engineCapacityError}</Text>
+            ) : null}
+          </View>
+
+          {/* Vehicle Type Dropdown */}
+          <View style={styles.dropdownContainer}>
+            <MtDropdown
+              showLabel
+              label="Vehicle Type"
+              placeholder="Select vehicle type"
+              onChange={handleVehicleTypeChange}
+              value={vehicleType}
+              width={324}
+              dropdownHeight={52}
+              dropdownBackgroundColor={Colors.inputBackground}
+              dataList={constant.vehicleType}
+              dropdownTextSize={16}
+              dropdownMarginTop={0}
+              menuHeight={170}
+              isSearchable={false}
             />
           </View>
-        </View>
+        </ScrollView>
       </KeyboardAvoidingView>
+
+      {/* Buttons */}
+      <View style={styles.buttonContainer}>
+        <View style={styles.leftButton}>
+          <MtButton
+            title="Cancel"
+            marginTop={18}
+            style={styles.button}
+            onPress={handleCancel}
+            width={158}
+            backgroundColor="transparent"
+            borderWidth={1}
+            textColor={Colors.textPrimary}
+          />
+        </View>
+
+        <View style={styles.rightButton}>
+          <MtButton
+            title="Add"
+            textColor={Colors.textSecondary}
+            marginTop={18}
+            style={styles.button}
+            onPress={handleAdd}
+            width={158}
+            disabled={!vehicleName || !engineCapacity || !vehicleType}
+          />
+        </View>
+      </View>
     </SafeAreaView>
   );
 };
@@ -196,6 +203,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.secondaryBackground,
+    paddingBottom: 60,
   },
   topContainer: {
     width: "100%",

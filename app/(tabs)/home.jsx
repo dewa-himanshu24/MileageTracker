@@ -28,7 +28,7 @@ const Home = () => {
     vehicle ? { ...vehicle, name: vehicle?.vehicleName } : null
   );
 
-  useEffect(() => { 
+  useEffect(() => {
     console.log("Dewa Home user", JSON.stringify(user));
     setSelectedVehicle(
       vehicle ? { ...vehicle, name: vehicle?.vehicleName } : null
@@ -63,159 +63,171 @@ const Home = () => {
     setRefuellings(value.refuellings);
   };
 
-  const averageFuelConsumption = helpers.calculateFuelConsumption(refuellings || [])?.averageFuelConsumption;
-  const lastFuelConsumption = helpers.calculateFuelConsumption(refuellings || [])?.lastFuelConsumption;
+  const averageFuelConsumption = helpers.calculateFuelConsumption(
+    refuellings || []
+  )?.averageFuelConsumption;
+  const lastFuelConsumption = helpers.calculateFuelConsumption(
+    refuellings || []
+  )?.lastFuelConsumption;
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.topBar}>
-        <View style={styles.topLeft}>
-          <Pressable onPress={handleOnPressUser}>
-            <Image source={icons.user} style={styles.user} />
-          </Pressable>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={styles.topBar}>
+          <View style={styles.topLeft}>
+            <Pressable onPress={handleOnPressUser}>
+              <Image source={icons.user} style={styles.user} />
+            </Pressable>
+          </View>
+          <View style={styles.topMiddle}>
+            <Image source={icons.union} style={styles.union} />
+          </View>
+          <View style={styles.topRight} />
         </View>
-        <View style={styles.topMiddle}>
-          <Image source={icons.union} style={styles.union} />
+
+        <View style={styles.content}>
+          <Text style={styles.greeting}>
+            Hi{" "}
+            {user?.nickname?.toProperCase() || user?.userName?.toProperCase()},
+          </Text>
         </View>
-        <View style={styles.topRight} />
-      </View>
 
-      <View style={styles.content}>
-        <Text style={styles.greeting}>
-          Hi {user?.nickname?.toProperCase() || user?.userName?.toProperCase()},
-        </Text>
-      </View>
+        {!vehicles.length && <EmptyHomeState />}
 
-      {!vehicles.length && <EmptyHomeState />}
-
-      {!!vehicles.length && (
-        <>
-          <View style={styles.middleBar}>
-            <Text style={styles.description}>
-              Here is everything about your
-            </Text>
-            <View style={styles.fullScreenOverlay}>
-              <MtDropdown
-                value={selectedVehicle}
-                onChange={handleSelectVehicle}
-                width={156}
-                dropdownHeight={34}
-                dropdownBackgroundColor={Colors.inputBackground}
-                dataList={dataList}
-                dropdownTextSize={14}
-                menuHeight={120}
+        {!!vehicles.length && (
+          <>
+            <View style={styles.middleBar}>
+              <Text style={styles.description}>
+                Here is everything about your
+              </Text>
+              <View style={styles.fullScreenOverlay}>
+                <MtDropdown
+                  value={selectedVehicle}
+                  onChange={handleSelectVehicle}
+                  width={156}
+                  dropdownHeight={34}
+                  dropdownBackgroundColor={Colors.inputBackground}
+                  dataList={dataList}
+                  dropdownTextSize={14}
+                  menuHeight={120}
+                />
+              </View>
+              <Image
+                source={
+                  vehicle?.imageURI
+                    ? { uri: vehicle.imageURI }
+                    : vehicle?.vehicleType === "2 Wheeler"
+                    ? images?.bike
+                    : images?.car
+                }
+                style={styles.vehicleImage}
               />
             </View>
-            <Image
-              source={
-                vehicle?.imageURI
-                  ? { uri: vehicle.imageURI }
-                  : vehicle?.vehicleType === "2 Wheeler"
-                  ? images?.bike
-                  : images?.car
-              }
-              style={styles.vehicleImage}
-            />
-          </View>
-          {!refuellings?.length && (
-            <View style={styles.noRefuellingContainer}>
-              <View style={styles.noRefuellingImgContainer}>
-                <Image
-                  source={images.noIllustration}
-                  style={styles.noIllustration}
-                  resizeMode="contain"
-                  accessible={true}
-                  accessibilityLabel="Illustration of a cloud"
-                />
-                <View style={styles.noRefuellingSubtextContainer}>
-                  <Text style={styles.noRefuellingSubtext1}>
-                    It's time to add the refuelling details to get more insights
-                  </Text>
-                </View>
-              </View>
-              <View>
-                <MtButton
-                  title="Add Refuelling"
-                  textColor={Colors.textSecondary}
-                  style={styles.button}
-                  iconName="arrowright"
-                  iconColor={Colors.textSecondary}
-                  width={161}
-                  onPress={() => router.push("/formRefuelling/new")}
-                />
-              </View>
-            </View>
-          )}
-          {!!refuellings?.length && (
-            <ScrollView
-              style={styles.scrollContainer}
-              contentContainerStyle={styles.scrollContentContainer}
-            >
-              <View>
-                <Text
-                  style={[
-                    styles.label,
-                    { paddingHorizontal: 20, marginBottom: 12 },
-                  ]}
-                >
-                  Fuel Insights
-                </Text>
-                <View style={styles.insightContainer}>
-                  <View style={styles.insightWrapper}>
-                    <View style={styles.insightInfo}>
-                      <Text style={styles.label}>Avg Fuel Consumption</Text>
-                      <Text style={styles.label}>{averageFuelConsumption}{' '}km/l</Text>
-                    </View>
-                  </View>
-                  <View style={styles.insightWrapper}>
-                    <View style={styles.insightInfo}>
-                      <Text style={styles.label}>Last Fuel Consumption</Text>
-                      <Text style={styles.label}>{lastFuelConsumption}{' '}km/l</Text>
-                    </View>
+            {!refuellings?.length && (
+              <View style={styles.noRefuellingContainer}>
+                <View style={styles.noRefuellingImgContainer}>
+                  <Image
+                    source={images.noIllustration}
+                    style={styles.noIllustration}
+                    resizeMode="contain"
+                    accessible={true}
+                    accessibilityLabel="Illustration of a cloud"
+                  />
+                  <View style={styles.noRefuellingSubtextContainer}>
+                    <Text style={styles.noRefuellingSubtext1}>
+                      It's time to add the refuelling details to get more
+                      insights
+                    </Text>
                   </View>
                 </View>
-              </View>
-
-              <View style={[styles.analyticContainer, { marginBottom: 36 }]}>
-                <Text style={styles.label}>Money spent on fuel</Text>
-                <RefuelingPriceBarChart />
-              </View>
-
-              <View style={{ marginTop: 36 }}>
-                <View
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    paddingHorizontal: 20,
-                    marginBottom: 12,
-                  }}
-                >
-                  <Text style={[styles.label]}>Fuel Insights</Text>
-                  <TouchableOpacity>
-                    <Image
-                      source={icons.seeAll}
-                      style={{ width: 64, height: 18 }}
-                    />
-                  </TouchableOpacity>
-                </View>
-
-                <View style={styles.insightContainer}>
-                  <FlatList
-                    data={refuellings}
-                    keyExtractor={(item) => item.id}
-                    renderItem={({ item }) => <FuelCard item={item} />}
-                    style={{ flex: 1 }}
-                    scrollEnabled={true}
-                    contentContainerStyle={{ paddingBottom: 10 }}
+                <View>
+                  <MtButton
+                    title="Add Refuelling"
+                    textColor={Colors.textSecondary}
+                    style={styles.button}
+                    iconName="arrowright"
+                    iconColor={Colors.textSecondary}
+                    width={161}
+                    onPress={() => router.push("/formRefuelling/new")}
                   />
                 </View>
               </View>
-            </ScrollView>
-          )}
-        </>
-      )}
+            )}
+            {!!refuellings?.length && (
+              <ScrollView
+                style={styles.scrollContainer}
+                contentContainerStyle={styles.scrollContentContainer}
+              >
+                <View>
+                  <Text
+                    style={[
+                      styles.label,
+                      { paddingHorizontal: 20, marginBottom: 12 },
+                    ]}
+                  >
+                    Fuel Insights
+                  </Text>
+                  <View style={styles.insightContainer}>
+                    <View style={styles.insightWrapper}>
+                      <View style={styles.insightInfo}>
+                        <Text style={styles.label}>Avg Fuel Consumption</Text>
+                        <Text style={styles.label}>
+                          {averageFuelConsumption} km/l
+                        </Text>
+                      </View>
+                    </View>
+                    <View style={styles.insightWrapper}>
+                      <View style={styles.insightInfo}>
+                        <Text style={styles.label}>Last Fuel Consumption</Text>
+                        <Text style={styles.label}>
+                          {lastFuelConsumption} km/l
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
+                </View>
+
+                <View style={[styles.analyticContainer, { marginBottom: 36 }]}>
+                  <Text style={styles.label}>Money spent on fuel</Text>
+                  <RefuelingPriceBarChart />
+                </View>
+
+                <View style={{ marginTop: 36 }}>
+                  <View
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      paddingHorizontal: 20,
+                      marginBottom: 12,
+                    }}
+                  >
+                    <Text style={[styles.label]}>Fuel Insights</Text>
+                    <TouchableOpacity>
+                      <Image
+                        source={icons.seeAll}
+                        style={{ width: 64, height: 18 }}
+                      />
+                    </TouchableOpacity>
+                  </View>
+
+                  <View style={styles.insightContainer}>
+                    <FlatList
+                      data={refuellings}
+                      keyExtractor={(item) => item.id}
+                      renderItem={({ item }) => <FuelCard item={item} />}
+                      style={{ flex: 1 }}
+                      scrollEnabled={true}
+                      contentContainerStyle={{ paddingBottom: 10 }}
+                    />
+                  </View>
+                </View>
+              </ScrollView>
+            )}
+          </>
+        )}
+      </ScrollView>
     </SafeAreaView>
   );
 };

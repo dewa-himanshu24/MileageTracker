@@ -48,7 +48,9 @@ const LandingPage = ({ users }) => {
 
     const selectedVehicle = Object.values(selectedProfile?.vehicles)?.[0];
     setUser(selectedProfile);
-    setVehicle({...selectedVehicle, name: selectedVehicle?.vehicleName} || null);
+    setVehicle(
+      { ...selectedVehicle, name: selectedVehicle?.vehicleName } || null
+    );
     setRefuellings(Object.values(selectedProfile?.vehicles)?.[0]?.refuellings);
   };
 
@@ -154,7 +156,6 @@ const styles = StyleSheet.create({
     lineHeight: 25,
     alignItems: "center",
     backgroundColor: Colors.backgroundColor,
-    height: "100%",
   },
   topContainer: {
     width: "100%",
