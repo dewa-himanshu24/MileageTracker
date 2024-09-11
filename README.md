@@ -74,3 +74,20 @@ yarn install
 expo start
 ```
 
+## **📱 Screenshots**
+
+<p float="left">
+  <img src="https://github.com/user-attachments/assets/682c216c-b688-4cea-8add-a80f12ac965d" alt="Landing Page" width="200"/>
+  <img src="https://github.com/user-attachments/assets/0d3c70f5-2abd-4527-a0dc-ba6123cf2518" alt="Sign Up" width="200"/>
+  <img src="https://github.com/user-attachments/assets/2d533979-bb93-4dc8-b020-6f8fa38d13be" alt="Home Screen" width="200"/>
+  <img src="https://github.com/user-attachments/assets/47d56c8f-88e6-4b9b-a72e-01c69f912e32" alt="Vehicle Form" width="200"/>
+  <img src="https://github.com/user-attachments/assets/418ceb82-d40c-4f7f-89c6-859b09269bf2" alt="List Vehicles" width="200"/>
+  <img src="https://github.com/user-attachments/assets/71616820-b8e6-4906-a87d-99648031b947" alt="Refuelling Form" width="200"/>
+  <img src="https://github.com/user-attachments/assets/da84e902-9433-4f7d-9619-f7a3f466e757" alt="List Refuellings" width="200"/>
+  <img src="https://github.com/user-attachments/assets/367c8c44-10dd-4231-aa66-4230b6d5b911" alt="View Refuelling" width="200"/>
+  <img src="https://github.com/user-attachments/assets/0caa9283-ca40-4139-9ca7-c6cf4a555afd" alt="Home Screen with Statics" width="200"/>
+  <img src="https://github.com/user-attachments/assets/5dd67216-f1d3-4139-b8c0-f695e532ade2" alt="performance" width="200"/>
+  <img src="https://github.com/user-attachments/assets/ebd0e7a3-cfd4-4cc1-99c1-3744d674825a" alt="User Profile" width="200"/>
+  <img src="https://github.com/user-attachments/assets/38951a5f-48ac-419c-b248-3dbea3431c5f" alt="User Profile" width="200"/>
+</p>
+
