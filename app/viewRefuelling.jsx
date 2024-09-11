@@ -15,7 +15,6 @@ const ViewRefueling = () => {
   const handleCancel = () => {
     router.back();
   };
-  console.log("Dewa ViewRefueling refuelling", refuelling);
   const handleEdit = () => {
     router.push(`/formRefuelling/${refuelling?.refuelling_id}`);
   }
@@ -30,7 +29,6 @@ const ViewRefueling = () => {
     setUser(updatedRefuellings.user);
     setVehicle(updatedRefuellings.vehicle);
     setRefuellings(updatedRefuellings.vehicle.refuellings);
-    console.log("Delete refuelling");
     router.push("/refuelling");
   };
 

@@ -53,7 +53,6 @@ const AddVehicle = () => {
         vehicle_id: Crypto.randomUUID(),
       };
       const updatedUser = VehicleServices.addVehicle(payload);
-      console.log("Dewa1 addVehicle updatedUser", JSON.stringify(updatedUser));
       setUser(updatedUser?.user);
       setVehicle(updatedUser?.vehicle);
       router.push("/vehicles");

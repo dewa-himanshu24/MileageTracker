@@ -48,27 +48,16 @@ class Helpers {
 
     if (Number(newEndReading) <= Number(newStartReading)) {
       alert("End reading must be greater than the start reading");
-      console.log("End reading is less than or equal to the start reading");
       return false;
     }
 
-    console.log("New newStartReading reading", newStartReading);
-    console.log("New lastEndReading reading", lastEndReading);
 
     if (newStartReading >= lastEndReading) {
-      console.log(
-        "New start reading is greater than the last end reading",
-        true
-      );
       return true;
     } else {
       if (refuellingId === "new") {
         alert(
           `The start reading you entered (${newStartReading} km) is lower than your last recorded end reading of ${lastEndReading} km. Please enter a start reading greater than ${lastEndReading} km.`
-        );
-        console.log(
-          "New start reading is less than or equal to the last end reading",
-          false
         );
         return false;
       } else {

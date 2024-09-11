@@ -25,8 +25,6 @@ const Profile = ({}) => {
 
   const handleDeleteAccount = async () => {
     const updatedUsers = await UserServices.deleteAccount(user?.user_id);
-    console.log("Dewa Profile updatedUsers", updatedUsers);
-    // clearAsyncStorage();
     setUsers(null);
     setUser(null);
     setVehicle(null);

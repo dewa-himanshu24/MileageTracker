@@ -19,7 +19,6 @@ const Performance = () => {
   const { user, setUser, vehicle, setVehicle, refuellings, setRefuellings } =
     useStore();
 
-  console.log("Dewa Performance refuellings", JSON.stringify(refuellings));
   const [selectedVehicle, setSelectedVehicle] = useState(null);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 

@@ -29,7 +29,6 @@ const Home = () => {
   );
 
   useEffect(() => {
-    console.log("Dewa Home user", JSON.stringify(user));
     setSelectedVehicle(
       vehicle ? { ...vehicle, name: vehicle?.vehicleName } : null
     );

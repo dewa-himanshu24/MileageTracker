@@ -35,15 +35,11 @@ const FormRefueling = () => {
   const [formSubmitted, setFormSubmitted] = useState(false);
 
   useEffect(() => {
-    console.log("FormRefueling mount3 vehicle", JSON.stringify(vehicle));
-    console.log("FormRefueling mount3 refuelling", JSON.stringify(refuelling));
     setSelectedVehicle(
       vehicle ? { ...vehicle, name: vehicle?.vehicleName } : null
     );
 
     if (refuellingId !== "new") {
-      console.log("FormRefueling refuellingId", refuellingId);
-      console.log("FormRefueling refuelling", refuelling);
       setrefuellingDate(
         refuelling?.refuellingDate
           ? new Date(refuelling?.refuellingDate)
@@ -99,14 +95,12 @@ const FormRefueling = () => {
 
       let updateUser = null;
       if (refuellingId !== "new") {
-        console.log("FormRefueling refuellingId", refuellingId);
         payload["refuelling_id"] = refuellingId;
         updateUser = RefuellingServices.updateRefuelling(payload);
       } else {
         (payload["refuelling_id"] = Crypto.randomUUID()),
           (updateUser = RefuellingServices.addRefuelling(payload));
       }
-      console.log("FormRefueling updateUser", JSON.stringify(updateUser));
       setUser(updateUser?.user);
       setVehicle(updateUser?.vehicle);
       setRefuelling(updateUser?.refuelling);
