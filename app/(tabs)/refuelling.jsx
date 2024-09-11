@@ -192,9 +192,12 @@ const styles = StyleSheet.create({
     position: "relative",
   },
   header: {
-    fontSize: 24,
-    fontWeight: "bold",
+    fontFamily: "Rubrik-Medium",
+    color: Colors.textPrimary,
+    fontSize: 22,
+    fontWeight: "500",
     textAlign: "center",
+    lineHeight: 28,
   },
 
   // Body

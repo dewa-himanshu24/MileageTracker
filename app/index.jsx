@@ -12,7 +12,6 @@ const App = () => {
   const [error, setError] = useState(null);
   useEffect(() => {
     const fetchUsers = async () => {
-      // clearAsyncStorage();
       try {
         // Fetch all users and the logged-in user
         const users = await UserServices.getAllUsers();
@@ -76,7 +75,7 @@ const App = () => {
 
   return (
     <View>
-      <Pressable
+      {/* <Pressable
         onPress={() => {
           console.log("Clearing storage");
           setUser(null);
@@ -85,7 +84,7 @@ const App = () => {
         style={{ marginTop: 15 }}
       >
         <Text>Clear Storage</Text>
-      </Pressable>
+      </Pressable> */}
       <LandingPage users={users} />
     </View>
   );
