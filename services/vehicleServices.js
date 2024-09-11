@@ -3,7 +3,7 @@
 class VehicleServices {
 
   addVehicle = (payload) => {
-    const { user, imageURI, vehicleName, engineCapacity, vehicleType } = payload;
+    const { user, imageURI, vehicleName, engineCapacity, vehicleType, vehicle_id } = payload;
 
     // Find the highest existing vehicle_id
     const vehicleIds = Object.keys(user?.vehicles).map(id => parseInt(id, 10));
@@ -11,7 +11,7 @@ class VehicleServices {
 
     // Create the new vehicle object
     const newVehicle = {
-        vehicle_id: nextVehicleId,
+        vehicle_id,
         imageURI,
         vehicleName,
         engineCapacity,
@@ -20,7 +20,8 @@ class VehicleServices {
     };
 
     // Add the new vehicle to the user's vehicles
-    user.vehicles[nextVehicleId] = newVehicle;
+    user.vehicles[vehicle_id] = newVehicle;
+    console.log("Dewa VehicleServices user", user);
     return { user, vehicle: newVehicle };
   }
 

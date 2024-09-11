@@ -19,6 +19,7 @@ import MtDropdown from "../components/common/MtDropdown.jsx";
 import MtButton from "../components/common/MtButton.jsx";
 import useStore from "../store/index.js";
 import { VehicleServices } from "../services/index.js";
+import * as Crypto from "expo-crypto";
 
 const AddVehicle = () => {
   const { setUser, user, setVehicle } = useStore();
@@ -49,6 +50,7 @@ const AddVehicle = () => {
         engineCapacity: engineCapacity,
         vehicleType: vehicleType?.name,
         imageURI: imageURI,
+        vehicle_id: Crypto.randomUUID(),
       };
       const updatedUser = VehicleServices.addVehicle(payload);
       console.log("Dewa1 addVehicle updatedUser", JSON.stringify(updatedUser));

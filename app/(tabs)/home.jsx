@@ -204,7 +204,9 @@ const Home = () => {
                     }}
                   >
                     <Text style={[styles.label]}>Fuel Insights</Text>
-                    <TouchableOpacity>
+                    <TouchableOpacity
+                      onPress={() => router.push("/refuelling")}
+                    >
                       <Image
                         source={icons.seeAll}
                         style={{ width: 64, height: 18 }}

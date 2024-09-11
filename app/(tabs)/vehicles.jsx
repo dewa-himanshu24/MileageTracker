@@ -10,6 +10,7 @@ import MtButton from "../../components/common/MtButton.jsx";
 function Vehicles() {
   const { user } = useStore();
   let vehicles = Object.values(user?.vehicles) || [];
+  console.log("Dewa Vehicles vehicles", vehicles);
   return (
     <SafeAreaView style={styles.container}>
       <View style={[styles.headerContainer]}>

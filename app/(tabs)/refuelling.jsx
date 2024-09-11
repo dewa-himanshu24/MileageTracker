@@ -31,7 +31,7 @@ const Refuelling = () => {
   }, [vehicle, refuellings]);
 
   const vehicles = user?.vehicles ? Object.values(user?.vehicles) : [];
-
+  console.log("Dewa Refuelling vehicles", vehicles);
   const dataList = vehicles?.map((vehicle) => ({
     ...vehicle,
     id: vehicle.vehicle_id,
