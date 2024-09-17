@@ -71,7 +71,7 @@ yarn install
 ```
 3. Run the app using Expo:
 ```
-expo start
+expo start --offline
 ```
 
 ## **📱 Screenshots**
